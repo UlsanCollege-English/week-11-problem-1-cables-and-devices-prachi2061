@@ -1,5 +1,5 @@
 import pytest
-from hw01.main import build_graph, degree_dict
+from main import build_graph, degree_dict
 
 def test_small_undirected_basic():
     edges = [('PC1','SW1'), ('SW1','PR1'), ('PR1','PC2')]
