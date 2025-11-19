@@ -18,9 +18,9 @@ def test_directed_out_degree():
 def test_self_loop_counts_once_undirected():
     edges = [('X','X')]
     g = build_graph(edges, directed=False)
-    assert g['X'] == ['X', 'X']  # both directions are the same node
+    assert g['X'] == ['X', 'X']
     d = degree_dict(g)
-    assert d['X'] == 2  # neighbor list has two entries
+    assert d['X'] == 2
 
 def test_empty_edges():
     g = build_graph([], directed=False)
@@ -31,12 +31,10 @@ def test_empty_edges():
 def test_multiple_edges_accumulate(directed):
     edges = [('A','B'), ('A','B'), ('B','A')]
     g = build_graph(edges, directed=directed)
-    # We allow duplicates; sizes should reflect adds
     if directed:
         assert g['A'].count('B') == 2
     else:
-        # Each ('A','B') adds A->B and B->A
-        assert g['A'].count('B') == 3  # two from first two, one from ('B','A') undirected mirror
+        assert g['A'].count('B') == 3
 
 def test_degree_dict_matches_neighbor_lengths():
     edges = [('P','Q'), ('Q','R'), ('R','S'), ('S','P')]
@@ -46,7 +44,6 @@ def test_degree_dict_matches_neighbor_lengths():
         assert d[u] == len(g[u])
 
 def test_isolated_nodes_not_forced():
-    # No node appears unless present in edges
     g = build_graph([('A','B')], directed=False)
     assert 'Z' not in g
 
@@ -61,4 +58,4 @@ def test_directed_asymmetric_neighbors():
     g = build_graph(edges, directed=True)
     assert g['K'] == ['L']
     assert g['L'] == ['M']
-    assert g['M'] == []
+    assert g['M'] == [] 
