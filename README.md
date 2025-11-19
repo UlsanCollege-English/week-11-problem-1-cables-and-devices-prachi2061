@@ -1,53 +1,44 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/wHmfzksI)
-# HW01 — Cables and Devices (Build a Graph + Degrees)
+HW01 — Cables and Devices
 
-**Story intro.**  
-You manage a small office network. Each device is linked to others by a cable. You get a list of cable pairs. You need a data model to answer simple questions like “who is connected to whom?” and “how many cables touch each device?”
+Story  
+I need to model a small office network. Each device is connected by cables. The input is a list of pairs like [('PC1','SW1'), ('SW1','PR1')]. I have to build a graph and calculate degrees.
 
-**Technical description.**  
-- **Input:** A list of edges like `[('PC1','SW1'), ('SW1','PR1')]`. Edges are undirected (a cable links both ways).  
-- **Output:**  
-  - `build_graph(edges, directed=False)` → adjacency list `dict` mapping node → list of neighbors.  
-  - `degree_dict(graph)` → `dict` node → number of neighbors (for `directed=True`, this is **out-degree**).  
-- **Constraints:**  
-  - Node names are hashable strings.  
-  - No external libraries.  
-  - Edge pairs may repeat; handle by adding neighbors each time (duplicates allowed for HW01; we will ignore multi-edges).  
-- **Expected complexity:** `build_graph` runs in **O(E)** time, uses **O(V+E)** space. `degree_dict` runs in **O(V+E)**.
+Technical details  
+- Input: list of (u,v) pairs
+- Output:
+  - build_graph(edges, directed=False): returns a dict where each node maps to a list of neighbors
+  - degree_dict(graph): returns a dict where each node maps to its degree (number of neighbors)
+- Constraints:
+  - Node names are strings
+  - No external libraries
+  - Duplicates allowed
+- Complexity:
+  - build_graph: O(E) time, O(V+E) space
+  - degree_dict: O(V+E)
 
-## ESL scaffold with the 8 Steps
-**Steps 1–5 (explicit prompts)**
-1. **Read & Understand:** What does an edge mean here? Is it one-way or two-way?  
-2. **Re-phrase:** Say it in your words: “Make a dictionary of neighbors.”  
-3. **Identify I/O:** What is the input shape? What is the output shape?  
-4. **Break down:** How will you add keys for new nodes? How do you add both directions for undirected?  
-5. **Pseudocode:** Write 5–7 lines to loop through edges and fill the dictionary.
+Steps  
+1. Understand: An edge means two devices connected by a cable. Undirected means both directions.
+2. Rephrase: Make a dictionary of nodes and their neighbors.
+3. I/O: Input is a list of tuples, output is a dict.
+4. Plan: Loop through edges, add u→v and v→u if undirected.
+5. Pseudocode:
+graph = {}
+for (u,v) in edges:
+    if u not in graph: graph[u] = []
+    graph[u].append(v)
+    if not directed:
+        if v not in graph: graph[v] = []
+        graph[v].append(u)
+return graph
 
-**Steps 6–8 (hints)**
-- **Write code:** Turn your pseudocode into Python loops and `dict` updates.  
-- **Debug:** Print the dict for a tiny example. Check one node by hand.  
-- **Optimize:** State big-O. Explain in one sentence.
+Hints  
+- Write code from pseudocode
+- Debug with a small example
+- Optimize: O(E) time, O(V+E) space
 
-## Hints (not spoilers)
-- Start with an empty dict. Create empty lists when you first see a node.  
-- For undirected, append twice: `u→v` and `v→u`.  
-- Degrees are just `len(graph[node])`.
-
-## Run tests locally
-```bash
-python -m pytest -q
-```
-## FAQ
-Q: Python version? A: 3.10 or 3.11.
-
-Q: Should I read from stdin? A: No. Write the functions. Tests import them.
-
-Q: Big-O I should state? A: build_graph O(E) time, O(V+E) space; degree_dict O(V+E).
-
-Q: Duplicated edges? A: You may keep duplicates; degrees will count them.
-
-Q: Self-loop (u,u)? A: Allowed; degree increases by 1 in undirected (neighbor list gets one u).
-
-Q: Why did pytest fail to import? A: Ensure your functions are in main.py and named as shown.
-
-Q: How are points given? A: 70% tests, 30% README with Steps and complexity note.
+FAQ  
+Q: Python version? A: 3.10 or 3.11  
+Q: Read from stdin? A: No  
+Q: Big-O? A: build_graph O(E), degree_dict O(V+E)  
+Q: Duplicates? A: Allowed  
+Q: Self-loop? A: Allowed  
