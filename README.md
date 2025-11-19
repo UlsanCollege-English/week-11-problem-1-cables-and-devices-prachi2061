@@ -1,26 +1,27 @@
-HW01 — Cables and Devices
+HW01 — Cables and Devices (Build a Graph + Degrees)
 
-Story  
-I need to model a small office network. Each device is connected by cables. The input is a list of pairs like [('PC1','SW1'), ('SW1','PR1')]. I have to build a graph and calculate degrees.
+Story intro  
+You manage a small office network. Each device is linked to others by a cable. You get a list of cable pairs. You need a data model to answer simple questions like “who is connected to whom?” and “how many cables touch each device?”
 
-Technical details  
-- Input: list of (u,v) pairs
+Technical description  
+- Input: A list of edges like [('PC1','SW1'), ('SW1','PR1')]. Edges are undirected (a cable links both ways).
 - Output:
-  - build_graph(edges, directed=False): returns a dict where each node maps to a list of neighbors
-  - degree_dict(graph): returns a dict where each node maps to its degree (number of neighbors)
+  - build_graph(edges, directed=False): returns a dictionary mapping node → list of neighbors
+  - degree_dict(graph): returns a dictionary mapping node → degree (number of neighbors)
 - Constraints:
   - Node names are strings
   - No external libraries
   - Duplicates allowed
-- Complexity:
+- Expected complexity:
   - build_graph: O(E) time, O(V+E) space
   - degree_dict: O(V+E)
 
-Steps  
-1. Understand: An edge means two devices connected by a cable. Undirected means both directions.
-2. Rephrase: Make a dictionary of nodes and their neighbors.
-3. I/O: Input is a list of tuples, output is a dict.
-4. Plan: Loop through edges, add u→v and v→u if undirected.
+ESL scaffold with the 8 Steps  
+Steps 1–5  
+1. Read & Understand: An edge means two devices connected by a cable. Undirected means both directions.
+2. Rephrase: Make a dictionary mapping each node to its neighbors.
+3. Identify I/O: Input is a list of (u,v) pairs. Output is a dict node → list of neighbors.
+4. Break down: Loop through edges, add u→v and v→u if undirected. Ensure keys exist.
 5. Pseudocode:
 graph = {}
 for (u,v) in edges:
@@ -31,14 +32,14 @@ for (u,v) in edges:
         graph[v].append(u)
 return graph
 
-Hints  
-- Write code from pseudocode
-- Debug with a small example
-- Optimize: O(E) time, O(V+E) space
+Steps 6–8  
+- Write code: Turn pseudocode into Python.
+- Debug: Print graph for a small example.
+- Optimize: O(E) time, O(V+E) space.
 
 FAQ  
 Q: Python version? A: 3.10 or 3.11  
-Q: Read from stdin? A: No  
+Q: Should I read from stdin? A: No. Write the functions. Tests import them.  
 Q: Big-O? A: build_graph O(E), degree_dict O(V+E)  
 Q: Duplicates? A: Allowed  
-Q: Self-loop? A: Allowed  
+Q: Self-loop? A: Allowed; degree counts twice in undirected  
